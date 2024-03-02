@@ -5,7 +5,7 @@ namespace DbProject.Config.Data;
 
 [SuppressMessage("ReSharper", "UnusedMember.Global")]
 [SuppressMessage("Performance", "CA1822:Mark members as static")]
-public record TemplateConfig
+public record TemplateConfig : IConfig
 {
     public string Host => "localhost";
     public string Username => "root";

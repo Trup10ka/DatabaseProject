@@ -6,4 +6,4 @@ public record Config(
     string Password,
     short? Port = null,
     string? DbName = null
-);
+) : IConfig;
