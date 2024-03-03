@@ -1,7 +1,5 @@
-﻿using System.IO;
-using System.Text.Json;
+﻿using System.Text.Json;
 using DbProject.Config.Data;
-using static DbProject.Util.Paths;
 
 namespace DbProject.Util;
 
@@ -9,18 +7,18 @@ public static class FileManagement
 {
     private static readonly JsonSerializerOptions Options = new () { WriteIndented = true };
     
-    public static void CreateDirIfNotExists()
+    public static void CreateDirIfNotExists(string exportPath)
     {
-        if (!Directory.Exists(ExportPath))
-            Directory.CreateDirectory(ExportPath);
+        if (!Directory.Exists(exportPath))
+            Directory.CreateDirectory(exportPath);
     }
     
-    public static bool CopyTemplateConfigIfNotExists()
+    public static bool CopyTemplateConfigIfNotExists(string configPath)
     {
-        if (File.Exists(ConfigPath)) return true;
+        if (File.Exists(configPath)) return true;
         
         File.WriteAllText(
-            ConfigPath, 
+            configPath, 
             JsonSerializer.Serialize(new TemplateConfig(), Options)
             );
         return false;
