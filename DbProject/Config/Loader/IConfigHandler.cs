@@ -6,5 +6,5 @@ public interface IConfigHandler
 {
     Data.Config LoadConfig();
     
-    void SaveConfig(IConfig config);
+    void SaveConfig(Data.Config config);
 }

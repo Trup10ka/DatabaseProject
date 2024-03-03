@@ -9,7 +9,7 @@ public class JSONConfigHandler : IConfigHandler
         return null;
     }
 
-    public void SaveConfig(IConfig config)
+    public void SaveConfig(Data.Config config)
     {
         throw new NotImplementedException();
     }
