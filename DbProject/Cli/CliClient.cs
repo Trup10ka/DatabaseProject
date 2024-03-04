@@ -1,4 +1,4 @@
-using DbProject.Exceptions;
+﻿using DbProject.Exceptions;
 using Microsoft.Extensions.Logging;
 using Configuration = DbProject.Config.Data.Config;
 
@@ -14,6 +14,14 @@ public class CliClient(Configuration config)
     public void Start()
     {
         InitializeLogger();
+        
+        if (Logger == null) throw new LoggerNotInitializedException();
+        if (DbClient == null) throw new DbClientNotInitialized();
+        
+        Logger.LogInformation("Starting CLI Client");
+        Logger.LogInformation("Establishing connection to database");
+        DbClient.ConnectToDatabase();
+
     }
 
     private void InitializeLogger()

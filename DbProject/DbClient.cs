@@ -1,5 +1,7 @@
-using DbProject.Cli;
+﻿using DbProject.Cli;
 using DbProject.Config.Loader;
+using Microsoft.Data.SqlClient;
+using static DbProject.Database.Util.DbUtil;
 using Configuration = DbProject.Config.Data.Config;
 
 namespace DbProject;
@@ -24,7 +26,19 @@ public class DbClient
         CliClient.PairWithDbClient(this);
         CliClient.Start();
     }
-
+    
+    public bool ConnectToDatabase()
+    {
+        using var sqlConnection = new SqlConnection(AssembleConnectionString(Config));
+        sqlConnection.Open();
+        sqlConnection.Close();
+        return true;
+    }
+    
+    /// <summary>
+    /// Factory method for creating a new DbClient
+    /// </summary>
+    /// <returns>Instance of DbClient with config and CLI initialized</returns>
     public static DbClient CreateClient()
     {
         var configLoader = new JSONConfigHandler();
