@@ -1,4 +1,4 @@
-﻿using DbProject.Cli;
+using DbProject.Cli;
 using DbProject.Config.Loader;
 using Configuration = DbProject.Config.Data.Config;
 
@@ -27,8 +27,8 @@ public class DbClient
     public static DbClient CreateClient()
     {
         var configLoader = new JSONConfigHandler();
-        var cliClient = new CliClient();
         var config = configLoader.LoadConfig();
+        var cliClient = new CliClient(config);
         return new DbClient(config, configLoader, cliClient);
     }
 }
