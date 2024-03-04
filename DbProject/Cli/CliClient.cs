@@ -6,6 +6,8 @@ namespace DbProject.Cli;
 
 public class CliClient(Configuration config)
 {
+    private DbClient? DbClient { get; set; }
+    
     private Configuration Config { get; init; } = config;
     private ILogger? Logger { get; set; }
     
@@ -18,8 +20,10 @@ public class CliClient(Configuration config)
     {
         using var factory = LoggerFactory.Create(builder => builder.AddConsole());
         Logger = factory.CreateLogger("Main");
-
-        if (Logger == null)
-            throw new LoggerNotInitializedException();
+    }
+    
+    public void PairWithDbClient(DbClient dbClient)
+    {
+        DbClient = dbClient;
     }
 }

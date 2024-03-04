@@ -21,6 +21,7 @@ public class DbClient
 
     public void Start()
     {
+        CliClient.PairWithDbClient(this);
         CliClient.Start();
     }
 
