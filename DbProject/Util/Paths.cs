@@ -1,6 +1,4 @@
-﻿using System.IO;
-
-namespace DbProject.Util;
+﻿namespace DbProject.Util;
 
 public static class Paths
 {

@@ -8,5 +8,4 @@ public class InsertQuery(
 {
     public override string SqlCommand => 
         $"INSERT INTO {TableName} ({string.Join(", ", columnNames)}) VALUES ({string.Join(", ", values)})";
-    
 }
