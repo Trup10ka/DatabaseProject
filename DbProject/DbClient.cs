@@ -1,7 +1,7 @@
 ﻿using DbProject.Cli;
 using DbProject.Config.Loader;
-using Microsoft.Data.SqlClient;
-using static DbProject.Database.Util.DbUtil;
+using DbProject.Database;
+using static DbProject.Database.ConnectionManager;
 using Configuration = DbProject.Config.Data.Config;
 
 namespace DbProject;
@@ -10,7 +10,7 @@ public class DbClient
 {
     private CliClient CliClient { get; }
     
-    private Configuration Config { get; init; }
+    private Configuration Config { get; }
     
     private IConfigHandler ConfigHandler { get; }
     
@@ -24,12 +24,13 @@ public class DbClient
     public void Start()
     {
         CliClient.PairWithDbClient(this);
+        ConnectionManager.Config = Config;
         CliClient.Start();
     }
     
     public bool ConnectToDatabase()
     {
-        using var sqlConnection = new SqlConnection(AssembleConnectionString(Config));
+        using var sqlConnection = CreateConnection();
         sqlConnection.Open();
         sqlConnection.Close();
         return true;
