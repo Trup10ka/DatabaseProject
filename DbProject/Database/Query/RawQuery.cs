@@ -1,4 +1,4 @@
-﻿using Microsoft.Data.SqlClient;
+﻿using static DbProject.Database.ConnectionManager;
 
 namespace DbProject.Database.Query;
 
@@ -9,9 +9,8 @@ public abstract class RawQuery(string tableName) : IQuery
     
     public abstract string SqlCommand { get; }
 
-    public virtual void Execute(SqlConnection sqlConnection)
+    public virtual void Execute()
     {
-        using var sqlCommand = new SqlCommand(SqlCommand, sqlConnection);
-        sqlCommand.ExecuteNonQuery();
+        using var sqlConnection = CreateConnection();
     }
 }

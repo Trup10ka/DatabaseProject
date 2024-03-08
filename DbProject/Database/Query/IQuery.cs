@@ -7,5 +7,5 @@ public interface IQuery
     
     string SqlCommand { get; }
     
-    void Execute(SqlConnection sqlConnection);
+    void Execute();
 }
