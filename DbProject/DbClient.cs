@@ -1,6 +1,7 @@
 ﻿using DbProject.Cli;
 using DbProject.Config.Loader;
 using DbProject.Database;
+using Microsoft.Data.SqlClient;
 using static DbProject.Database.ConnectionManager;
 using Configuration = DbProject.Config.Data.Config;
 
@@ -28,11 +29,18 @@ public class DbClient
         CliClient.Start();
     }
     
-    public bool ConnectToDatabase()
+    public static bool TestConnection()
     {
         using var sqlConnection = CreateConnection();
-        sqlConnection.Open();
-        sqlConnection.Close();
+        try
+        {
+            sqlConnection.Open();
+            sqlConnection.Close();
+        }
+        catch (SqlException)
+        {
+            return false;
+        }
         return true;
     }
     
