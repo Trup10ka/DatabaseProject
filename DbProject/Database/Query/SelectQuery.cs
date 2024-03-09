@@ -1,4 +1,7 @@
-﻿namespace DbProject.Database.Query;
+﻿using DbProject.Database.Data;
+using Microsoft.Data.SqlClient;
+
+namespace DbProject.Database.Query;
 
 public class SelectQuery(
     string tableName,
@@ -7,7 +10,7 @@ public class SelectQuery(
     string? groupBy,
     string? having,
     string? orderBy
-    ) : RawQuery(tableName)
+    ) : AbstractQuery(tableName)
 {
     public override string SqlCommand
     {
@@ -20,5 +23,25 @@ public class SelectQuery(
             var order = orderBy is null ? "" : $"ORDER BY {orderBy}";
             return $"SELECT {columns} FROM {TableName} {where} {group} {havingClause} {order}";
         }
+    }
+
+    public override List<ResultRow> ExecuteQuery()
+    {
+        using var sqlConnection = ConnectionManager.CreateConnection();
+        var sqlCommand = new SqlCommand(SqlCommand, sqlConnection);
+        var reader = sqlCommand.ExecuteReader();
+        
+        var result = new List<ResultRow>();
+        while (reader.Read())
+        {
+            var row = new ResultRow(new List<string>());
+            for (var i = 0; i < reader.FieldCount; i++)
+            {
+                row.ColumnValue!.Add(reader[i].ToString() ?? string.Empty);
+            }
+            result.Add(row);
+        }
+
+        return result;
     }
 }
