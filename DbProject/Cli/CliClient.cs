@@ -15,23 +15,22 @@ public class CliClient(Configuration config)
     {
         InitializeLogger();
         
-        if (Logger == null) throw new LoggerNotInitializedException();
-        if (DbClient == null) throw new DbClientNotInitialized();
-        
         Logger.LogInformation("Starting CLI Client");
         Logger.LogInformation("Establishing connection to database");
-        DbClient.ConnectToDatabase();
-
+        var testConnection = DbClient.TestConnection();
+        Logger.LogInformation("Connection established: {testConnection}", testConnection);
     }
 
     private void InitializeLogger()
     {
         using var factory = LoggerFactory.Create(builder => builder.AddConsole());
+        if (Logger == null) throw new LoggerNotInitializedException();
         Logger = factory.CreateLogger("Main");
     }
     
     public void PairWithDbClient(DbClient dbClient)
     {
+        if (DbClient == null) throw new DbClientNotInitialized();
         DbClient = dbClient;
     }
 }
