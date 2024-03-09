@@ -1,11 +1,11 @@
-﻿using Microsoft.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 using Configuration = DbProject.Config.Data.Config;
 
 namespace DbProject.Database;
 
 public static class ConnectionManager
 {
-   public static Configuration? Config { get; set; }
+   public static Configuration Config { get; set; } = null!;
 
    public static SqlConnection CreateConnection()
    {

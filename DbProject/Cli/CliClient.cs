@@ -1,4 +1,4 @@
-﻿using DbProject.Exceptions;
+using DbProject.Exceptions;
 using Microsoft.Extensions.Logging;
 using Configuration = DbProject.Config.Data.Config;
 
@@ -9,7 +9,7 @@ public class CliClient(Configuration config)
     private DbClient? DbClient { get; set; }
     
     private Configuration Config { get; init; } = config;
-    private ILogger? Logger { get; set; }
+    private ILogger Logger { get; set; } = null!;
     
     public void Start()
     {
