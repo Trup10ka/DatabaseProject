@@ -1,4 +1,4 @@
-using Microsoft.Data.SqlClient;
+﻿using Microsoft.Data.SqlClient;
 using Configuration = DbProject.Config.Data.Config;
 
 namespace DbProject.Database;
@@ -9,10 +9,10 @@ public static class ConnectionManager
 
    public static SqlConnection CreateConnection()
    {
-      return null;
+      return new SqlConnection(AssembleConnectionString(Config));
    }
    
-   public static string AssembleConnectionString(Configuration config)
+   private static string AssembleConnectionString(Configuration config)
    {
         
       var builder = new SqlConnectionStringBuilder
