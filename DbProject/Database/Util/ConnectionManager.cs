@@ -1,7 +1,7 @@
 ﻿using Microsoft.Data.SqlClient;
 using Configuration = DbProject.Config.Data.Config;
 
-namespace DbProject.Database;
+namespace DbProject.Database.Util;
 
 public static class ConnectionManager
 {
