@@ -19,3 +19,19 @@ This project won't be updated after the end of turn in date **8th of March 2024*
 - app should be configurable
 - document code 
 - develop a separate PDF documentation
+
+## Project description
+This project has:
+- CliClient
+- Config loader interface
+- Database interface
+  - Dao
+  - Dto
+  - Connection
+  - Services
+  - Utils
+- Exceptions
+## Controls
+Whole program just uses the command line interface.
+
+You use numbers to navigate through the menu.
