@@ -6,6 +6,6 @@ public record Order(
     int EmployeeId,
     int PaymentMethodId,
     decimal Price,
-    DateTime OrderDate,
+    string OrderDate,
     int? ID = null
     );
