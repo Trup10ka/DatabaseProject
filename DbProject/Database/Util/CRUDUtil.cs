@@ -8,7 +8,7 @@ public static class CRUDUtil
 {
     public static int Insert(this Table table, string[] values)
     {
-        var insertQuery = new InsertQuery(table.Name, columnNames: table.Columns.ToStringArray(), values: values);
+        var insertQuery = new InsertQuery(table.Name, columnNames: table.Columns.ToStringArrayWithoutId(), values: values);
         return insertQuery.ExecuteQuery()[0].RowsAffected;
     }
     
@@ -20,7 +20,7 @@ public static class CRUDUtil
     
     public static List<ResultRow> Select(this Table table, string whereClause)
     {
-        var selectQuery = new SelectQuery(table.Name,  table.Columns.ToStringArray(), whereClause: whereClause);
+        var selectQuery = new SelectQuery(table.Name,  table.Columns.ToStringArrayWithId(), whereClause: whereClause);
         return selectQuery.ExecuteQuery();
     }
     
@@ -30,13 +30,23 @@ public static class CRUDUtil
         return deleteQuery.ExecuteQuery()[0].RowsAffected;
     }
     
-    private static string[] ToStringArray(this IReadOnlyList<Column> list)
+    private static string[] ToStringArrayWithId(this IReadOnlyList<Column> list)
     {
         var array = new string[list.Count + 1];
         array[0] = "id";
         for (var i = 0; i < list.Count; i++)
         {
             array[i + 1] = list[i].Name;
+        }
+        return array;
+    }
+    
+    private static string[] ToStringArrayWithoutId(this IReadOnlyList<Column> list)
+    {
+        var array = new string[list.Count];
+        for (var i = 0; i < list.Count; i++)
+        {
+            array[i] = list[i].Name;
         }
         return array;
     }
