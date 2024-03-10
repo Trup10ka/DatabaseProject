@@ -36,6 +36,13 @@ public static class FileManagement
     
     public static string LoadFileContent(string path)
     {
-        return File.ReadAllText(path);
+        try
+        {
+            return File.ReadAllText(path);
+        }
+        catch
+        {
+            return "";
+        }
     }
 }
