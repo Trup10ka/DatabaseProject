@@ -5,5 +5,7 @@ public enum ColumnType
     VARCHAR,
     INT,
     DATE,
-    BIT
+    BIT,
+    REFERENCE,
+    FLOAT
 }

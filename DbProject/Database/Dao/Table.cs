@@ -21,4 +21,8 @@ public class Table(string name)
     protected void Bit(string name) => RegisterColumn(name, ColumnType.BIT);
     
     protected void Date(string name) => RegisterColumn(name, ColumnType.DATE);
+    
+    protected void Float(string name) => RegisterColumn(name, ColumnType.FLOAT);
+    
+    protected void Reference(string name, Table table) => RegisterColumn(name, ColumnType.REFERENCE);
 }
