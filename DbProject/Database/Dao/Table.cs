@@ -13,6 +13,12 @@ public class Table(string name)
         var column = new Column(name, type);
         Columns.Add(column);
     }
+    
+    private void RegisterColumn(string name, ColumnType type, Type reference)
+    {
+        var column = new Column(name, type, reference);
+        Columns.Add(column);
+    }
 
     protected void Varchar(string name) => RegisterColumn(name, ColumnType.VARCHAR);
     
@@ -24,5 +30,5 @@ public class Table(string name)
     
     protected void Float(string name) => RegisterColumn(name, ColumnType.FLOAT);
     
-    protected void Reference(string name, Table table) => RegisterColumn(name, ColumnType.REFERENCE);
+    protected void Reference(string name, Type tableType) => RegisterColumn(name, ColumnType.REFERENCE, tableType);
 }
