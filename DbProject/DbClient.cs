@@ -1,7 +1,6 @@
 ﻿using System.Globalization;
 using DbProject.Cli;
 using DbProject.Config.Loader;
-using DbProject.Database;
 using DbProject.Database.Dao;
 using DbProject.Database.Dto;
 using DbProject.Database.Service;
@@ -14,6 +13,9 @@ using Configuration = DbProject.Config.Data.Config;
 
 namespace DbProject;
 
+/// <summary>
+/// DbClient class is the main entry point for the application. It initializes the CLI and the database connection
+/// </summary>
 public class DbClient
 {
     private CliClient CliClient { get; }
@@ -30,15 +32,15 @@ public class DbClient
     
     private Table OrdersTable => new OrdersTable();
     
-    private Table EmployeeTable => new EmployeeTable();
-    
-    
     private DbClient(Configuration config, CliClient cliClient)
     {
         Config = config;
         CliClient = cliClient;
     }
 
+    /// <summary>
+    /// At the start of the application, the DbClient pairs with the CLI client and test the connection to the database
+    /// </summary>
     public void Start()
     {
         CliClient.PairWithDbClient(this);
@@ -61,6 +63,10 @@ public class DbClient
         return true;
     }
     
+    /// <summary>
+    /// Creates a new customer DTO.
+    /// </summary>
+    /// <returns>Customer DTO</returns>
     public Customer CreateNewCustomer()
     {
         CliClient.Logger.LogInformation("Enter customer name");
@@ -80,6 +86,13 @@ public class DbClient
         );
     }
     
+    /// <summary>
+    /// Creates a new order DTO.
+    ///
+    /// User is asked to input the order total, customer full name, pc type, payment method and order date.
+    /// Employee Id is chosen from the available employees in the database.
+    /// </summary>
+    /// <returns>New order DTO created with user input; null if error occured during creation</returns>
     public Order? CreateNewOrder()
     {
         CliClient.Logger.LogInformation("Enter order total");
@@ -117,6 +130,10 @@ public class DbClient
             );
     }
     
+    /// <summary>
+    /// Asks for customers Name and Surname, on which the customer is found and updated.
+    /// </summary>
+    /// <returns>Customer DTO</returns>
     public Customer UpdateCustomer()
     {
         CliClient.Logger.LogInformation("Enter customer full name, separated by a space ('John Wick')");
@@ -159,6 +176,10 @@ public class DbClient
         }
     }
     
+    /// <summary>
+    /// Asks for customers Name and Surname, on which the customer is found and deleted.
+    /// </summary>
+    /// <returns>Returns how many rows were affected.</returns>
     public int DeleteCustomer()
     {
         CliClient.Logger.LogInformation("Enter customer full name, separated by a space ('John Wick')");
@@ -174,6 +195,9 @@ public class DbClient
         return CustomerService.DeleteCustomer(customer.ID);
     }
 
+    /// <summary>
+    /// Uses the DataImport class to import data from a CSV file, then inserts it into the database
+    /// </summary>
     public void ImportData()
     {
         var data = DataImport.ImportData();
@@ -198,6 +222,10 @@ public class DbClient
         }
     }
 
+    /// <summary>
+    /// Deletes order from the database on specified order ID
+    /// </summary>
+    /// <returns>How many rows were affected</returns>
     public int DeleteOrder()
     {
         CliClient.Logger.LogInformation("Enter order ID");

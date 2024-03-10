@@ -1,5 +1,8 @@
 ﻿namespace DbProject.Util;
 
+/// <summary>
+/// Static class for storing paths to files and directories.
+/// </summary>
 public static class Paths
 {
     public static readonly string ConfigPath = 
