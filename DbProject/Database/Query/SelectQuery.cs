@@ -1,15 +1,16 @@
 ﻿using DbProject.Database.Data;
+using DbProject.Database.Util;
 using Microsoft.Data.SqlClient;
 
 namespace DbProject.Database.Query;
 
 public class SelectQuery(
     string tableName,
-    string[]? columnNames,
-    string? whereClause,
-    string? groupBy,
-    string? having,
-    string? orderBy
+    string[]? columnNames = null,
+    string? whereClause = null,
+    string? groupBy = null,
+    string? having = null,
+    string? orderBy = null
     ) : AbstractQuery(tableName)
 {
     public override string SqlCommand
@@ -28,20 +29,27 @@ public class SelectQuery(
     public override List<ResultRow> ExecuteQuery()
     {
         using var sqlConnection = ConnectionManager.CreateConnection();
+        sqlConnection.Open();
         var sqlCommand = new SqlCommand(SqlCommand, sqlConnection);
-        var reader = sqlCommand.ExecuteReader();
-        
         var result = new List<ResultRow>();
-        while (reader.Read())
-        {
-            var row = new ResultRow(new List<string>());
-            for (var i = 0; i < reader.FieldCount; i++)
-            {
-                row.ColumnValue!.Add(reader[i].ToString() ?? string.Empty);
-            }
-            result.Add(row);
-        }
 
+        try
+        {
+          var reader = sqlCommand.ExecuteReader();
+           while (reader.Read())
+           {
+               var row = new ResultRow(new List<string>());
+               for (var i = 0; i < reader.FieldCount; i++)
+               {
+                   row.ColumnValue!.Add(reader[i].ToString() ?? string.Empty);
+               }
+               result.Add(row);
+           }  
+        }
+        catch (SqlException e)
+        {
+            Console.WriteLine(e.Message);
+        }
         return result;
     }
 }
