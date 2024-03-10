@@ -6,6 +6,7 @@ using DbProject.Database.Dao;
 using DbProject.Database.Dto;
 using DbProject.Database.Service;
 using DbProject.Database.Util;
+using DbProject.Import;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Logging;
 using static DbProject.Database.Util.ConnectionManager;
@@ -22,6 +23,8 @@ public class DbClient
     public IOrdersService OrdersService => new DbOrdersService(OrdersTable);
     
     public ICustomerService CustomerService => new DbCustomerService(CustomerTable);
+    
+    private IDataImport DataImport => new CSVDataImport();
     
     private static Table CustomerTable => new CustomerTable();
     
@@ -169,6 +172,30 @@ public class DbClient
         var surname = input.Split(' ')[1];
         var customer = CustomerService.GetCustomerByNameAndSurname(name, surname);
         return CustomerService.DeleteCustomer(customer.ID);
+    }
+
+    public void ImportData()
+    {
+        var data = DataImport.ImportData();
+        if (data == null)
+        {
+            CliClient.Logger.LogWarning("No data to import");
+            return;
+        }
+        switch (data[0][0].ToLower())
+        {
+            case "customer":
+                foreach (var row in data.Skip(1))
+                {
+                    var customer = new Customer(
+                        Name: row[0],
+                        Surname: row[1],
+                        Gender: int.Parse(row[2])
+                    );
+                    CustomerService.InsertCustomer(customer);
+                }
+                break;
+        }
     }
 
     public int DeleteOrder()

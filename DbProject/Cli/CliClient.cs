@@ -20,6 +20,8 @@ public class CliClient(Configuration config)
         Logger.LogInformation("Establishing connection to database");
         var testConnection = DbClient.TestConnection();
         Logger.LogInformation("Connection established: {testConnection}", testConnection);
+        DbClient.ImportData();
+        Logger.LogInformation("Import successful. Ready to accept commands.");
 
         if (testConnection)
         {
