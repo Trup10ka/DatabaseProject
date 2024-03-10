@@ -7,5 +7,6 @@ public enum ColumnType
     DATE,
     BIT,
     REFERENCE,
-    FLOAT
+    FLOAT,
+    ID
 }

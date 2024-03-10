@@ -19,6 +19,13 @@ public class Table(string name)
         var column = new Column(name, type, reference);
         Columns.Add(column);
     }
+    
+    private void RegisterIDColumn(string name)
+    {
+        var column = new Column(name, ColumnType.INT);
+    }
+    
+    protected void Id() => RegisterIDColumn("id");
 
     protected void Varchar(string name) => RegisterColumn(name, ColumnType.VARCHAR);
     
