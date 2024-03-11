@@ -4,6 +4,10 @@ using DbProject.Database.Util;
 
 namespace DbProject.Database.Service;
 
+/// <summary>
+/// Database implementation of the customer service interface
+/// </summary>
+/// <param name="customerTable">Customers table object</param>
 public class DbCustomerService(Table customerTable) : ICustomerService
 {
     public int InsertCustomer(Customer customer)

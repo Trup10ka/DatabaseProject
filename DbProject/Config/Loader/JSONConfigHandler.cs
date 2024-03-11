@@ -5,6 +5,9 @@ using static DbProject.Util.FileManagement;
 
 namespace DbProject.Config.Loader;
 
+/// <summary>
+/// JSON implementation for IConfigHandler.
+/// </summary>
 public class JSONConfigHandler : IConfigHandler
 {
     public Data.Config LoadConfig()

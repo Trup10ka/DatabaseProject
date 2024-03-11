@@ -2,12 +2,30 @@
 
 namespace DbProject.Database.Dao;
 
+/// <summary>
+/// DAO representation of a table in the database.
+///
+/// <br></br>
+///
+/// When initializing a new table, the name of the table should be passed to the constructor, and in that constructor,
+/// the columns of the table should be registered by calling methods as types
+/// </summary>
+/// <param name="name">Table name</param>
 public class Table(string name)
 {
     
-    public string Name { get; init; } = name;
+    public string Name { get; } = name;
+    
+    /// <summary>
+    /// All table columns
+    /// </summary>
     public List<Column> Columns { get; } = [];
     
+    /// <summary>
+    /// Registers a column in the table
+    /// </summary>
+    /// <param name="name">Column name</param>
+    /// <param name="type">Column type</param>
     private void RegisterColumn(string name, ColumnType type)
     {
         var column = new Column(name, type);
@@ -20,12 +38,12 @@ public class Table(string name)
         Columns.Add(column);
     }
     
-    private void RegisterIDColumn(string name)
+    private static void RegisterIDColumn(string name)
     {
         var column = new Column(name, ColumnType.INT);
     }
     
-    protected void Id() => RegisterIDColumn("id");
+    protected static void Id() => RegisterIDColumn("id");
 
     protected void Varchar(string name) => RegisterColumn(name, ColumnType.VARCHAR);
     

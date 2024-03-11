@@ -5,6 +5,10 @@ using DbProject.Database.Util;
 
 namespace DbProject.Database.Service;
 
+/// <summary>
+/// Database orders service implementation
+/// </summary>
+/// <param name="ordersTable">Orders table object</param>
 public class DbOrdersService(Table ordersTable) : IOrdersService
 {
     public int InsertNewOrder(Order order)

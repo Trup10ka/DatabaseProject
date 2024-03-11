@@ -3,6 +3,9 @@
 namespace DbProject.Config.Data;
 
 
+/// <summary>
+/// Template config is a sealed record only for creating a template config file.
+/// </summary>
 [SuppressMessage("ReSharper", "UnusedMember.Global")]
 [SuppressMessage("Performance", "CA1822:Mark members as static")]
 public sealed record TemplateConfig

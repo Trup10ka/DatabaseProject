@@ -1,5 +1,4 @@
-﻿
-namespace DbProject.Database.Dao;
+﻿namespace DbProject.Database.Dao;
 
 public class CustomerTable : Table
 {

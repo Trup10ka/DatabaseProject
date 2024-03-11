@@ -4,6 +4,14 @@ using static DbProject.Database.Util.ConnectionManager;
 
 namespace DbProject.Database.Query;
 
+/// <summary>
+/// Implementation of the abstract query class for an insert query.
+///
+/// Performs an insert into the database when calling ExecuteQuery.
+/// </summary>
+/// <param name="tableName">Table name on which query is to be called</param>
+/// <param name="columnNames">All columns in which is meant to be inserted values</param>
+/// <param name="values">Values for columns</param>
 public class InsertQuery(
     string tableName,
     string[] columnNames,

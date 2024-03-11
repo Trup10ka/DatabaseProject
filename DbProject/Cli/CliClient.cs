@@ -3,6 +3,10 @@ using Configuration = DbProject.Config.Data.Config;
 
 namespace DbProject.Cli;
 
+/// <summary>
+/// Command line interface for DbClient
+/// </summary>
+/// <param name="config">Configuration file loaded by DbClient</param>
 public class CliClient(Configuration config)
 {
     private DbClient DbClient { get; set; } = null!;
@@ -12,6 +16,9 @@ public class CliClient(Configuration config)
     
     public ILogger Logger { get; private set; } = null!;
     
+    /// <summary>
+    /// Starts up the CLI client and listens for input until is program shut down
+    /// </summary>
     public void Start()
     {
         InitializeLogger();
